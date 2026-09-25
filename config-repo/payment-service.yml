@@ -1,0 +1,23 @@
+# Cấu hình riêng cho payment-service (Config Server phân phát khi service khởi động).
+server:
+  port: 8083
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/shopmart_payment?createDatabaseIfNotExist=true
+    username: root
+    password: 123456
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+  kafka:
+    consumer:
+      group-id: payment-service-group
+
+# Giả lập cổng thanh toán
+payment:
+  # Đặt true để cố tình làm thanh toán thất bại -> chứng minh Saga rollback (Câu 3)
+  simulate-failure: false
+  # Giao dịch vượt hạn mức sẽ thất bại (vd: đặt 3 chiếc MacBook = 84.000.000)
+  max-amount: 80000000

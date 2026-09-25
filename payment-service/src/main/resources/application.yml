@@ -1,0 +1,23 @@
+# Cấu hình cốt lõi để service biết cách tìm tới Config Server (Câu 1 + Câu 5).
+# Toàn bộ cấu hình nghiệp vụ (datasource, jpa, kafka group-id, payment.*) nằm ở
+# config-repo/payment-service.yml và config-repo/application.yml, do Config Server phân phát.
+server:
+  port: 8083
+
+spring:
+  application:
+    name: payment-service
+  config:
+    import: optional:configserver:http://localhost:8888
+  cloud:
+    config:
+      fail-fast: false
+      retry:
+        max-attempts: 3
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true

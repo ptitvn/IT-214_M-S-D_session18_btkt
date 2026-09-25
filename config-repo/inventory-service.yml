@@ -1,0 +1,25 @@
+# Cấu hình riêng cho inventory-service (Config Server phân phát khi service khởi động).
+server:
+  port: 8082
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/shopmart_inventory?createDatabaseIfNotExist=true
+    username: root
+    password: 123456
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+  kafka:
+    consumer:
+      group-id: inventory-service-group
+  cache:
+    type: redis
+    redis:
+      time-to-live: 60000
+      cache-null-values: false
